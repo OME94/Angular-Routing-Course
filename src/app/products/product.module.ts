@@ -16,24 +16,29 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path:'products',
-        component: ProductListComponent,
-        data: {pageTitle: 'Products'}
-      },
-      {
-        path:'products/:id',
-        component: ProductDetailComponent,
-        resolve: {resolvedData: ProductResolver}
-      },
-      {
-        path:'products/:id/edit',
-        component: ProductEditComponent,
-        resolve: {resolvedData: ProductResolver},
         children: [
-          {path: 'info', component: ProductEditInfoComponent},
-          {path: 'tags', component: ProductEditTagsComponent},
-          {path: '', redirectTo: 'info', pathMatch: 'full'}
+          {
+            path: '',
+            component: ProductListComponent,
+            data: {pageTitle: 'Products'}
+          },
+          {
+            path:':id',
+            component: ProductDetailComponent,
+            resolve: {resolvedData: ProductResolver}
+          },
+          {
+            path:':id/edit',
+            component: ProductEditComponent,
+            resolve: {resolvedData: ProductResolver},
+            children: [
+              {path: 'info', component: ProductEditInfoComponent},
+              {path: 'tags', component: ProductEditTagsComponent},
+              {path: '', redirectTo: 'info', pathMatch: 'full'}
+            ]
+          }
         ]
-      },
+      }
     ])
   ],
   declarations: [

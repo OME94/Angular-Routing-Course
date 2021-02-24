@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit {
   imageMargin = 2;
   showImage = false;
   errorMessage = '';
+  loading: boolean;
 
   _listFilter = '';
   get listFilter(): string {
@@ -39,12 +40,15 @@ export class ProductListComponent implements OnInit {
     *this.router.navigate(['/link', reqParams..., {option1: key1, ...}],
     *                      {queryParams:{...}})
     * 
-    * this.router.navigate(['/link'], {queryParamsHandling: preserve / merge / })
+    * this.router.navigate(['/link'],
+    *                      {queryParams: {}},
+    *                      {queryParamsHandling: preserve / merge / })
     */
-
+    this.loading = true;
     this.productService.getProducts().subscribe({
       next: products => {
         this.products = products;
+        this.loading = false;
         this.filteredProducts = this.performFilter(this.listFilter);
       },
       error: err => this.errorMessage = err

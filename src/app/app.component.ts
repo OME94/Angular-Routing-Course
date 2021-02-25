@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 
 import { slideInAnimation } from './app.animation';
+import { MessageService } from './messages/message.service';
 
 import { AuthService } from './user/auth.service';
 
@@ -26,7 +27,12 @@ export class AppComponent {
     return '';
   }
 
+  get isMessageDisplayed(): boolean{
+    return this.messageService.isDisplayed
+  }
+
   constructor(private authService: AuthService,
+              private messageService: MessageService,
               private router: Router) {
                 router.events.subscribe((routerEvent: Event) => {
                   this.checkRouterEvent(routerEvent);
@@ -43,6 +49,16 @@ export class AppComponent {
         event instanceof NavigationCancel) {
       this.loading = false;
     }
+  }
+
+  displayMessages(): void {
+    this.router.navigate([{ outlets: { pop : ['messages']} }]);
+    this.messageService.isDisplayed = true;
+  }
+
+  hideMessages(): void {
+    this.router.navigate([{ outlets: { pop: null }}]);
+    this.messageService.isDisplayed = false;
   }
 
   logOut(): void {

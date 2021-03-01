@@ -14,9 +14,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     SharedModule,
     RouterModule.forChild([
-      {
-        path:'products',
-        children: [
           {
             path: '',
             component: ProductListComponent,
@@ -37,9 +34,7 @@ import { RouterModule } from '@angular/router';
               {path: '', redirectTo: 'info', pathMatch: 'full'}
             ]
           }
-        ]
-      }
-    ])
+      ])
   ],
   declarations: [
     ProductListComponent,
